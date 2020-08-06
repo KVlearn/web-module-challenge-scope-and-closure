@@ -42,6 +42,9 @@ Find the file `index.js` and complete the tasks.
 Edit the `ReadMe` file with your answers.
 
 1. In your own words, define closure (1-2 sentences).
+closure gives access to outer function's scope from an inner function
+Closure is created for a function and its reference to the variables
+that it has access to. 
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -54,17 +57,19 @@ function personalDice(name){
 }
 
 const dansRoll = personalDice("Dan");
-
 const zoesRoll = personalDice("Zoe");
-
-
 dansRoll();
 dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+Its in the return function within personalDice,this return function is within the parent function. 
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+name value remains the same for every call as its the same "Dan" argument used every call.
+newRoll value changes every call (new randome number generated)
+
 c. What is the lexical scope of `newRoll`? 
+within that inner function only.
 
 ### Task 2c - Exit Ticket
 
@@ -77,7 +82,8 @@ The completion of these questions is mandatory for MVP. However, passing the qui
 After you have completed the requirements, **create** a new file called `stretch.js` and practice more with closures. There are no tests for these problems.
 
 See if you can complete one or more of the following challenges:
-
+DONE:
+https://codepen.io/codemode1/pen/wvGvRxO?editors=0011
 1. Predict the output of the code below and explain why this is the output using what you learned today. When you're ready for answers, view an explanation [here](https://www.coderbyte.com/algorithm/3-common-javascript-closure-questions
 
 ```js
