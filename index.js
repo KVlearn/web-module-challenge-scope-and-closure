@@ -27,10 +27,15 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
- * 
+ * counter1 has the count variable declared inside the function (as functional scope).
+ * whereas counter2 has the count variable declared in the global scope
  * 2. Which of the two uses a closure? How can you tell?
+ * counter1 uses closure. Here the count variable is within {} and is stored (keeps track) every time this function is invoked.
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * counter1 will eliminate having global variables which causes human error incase of larger code. 
+ * When there are common variables that needs to be reused across the code.
+ * 
  *
 */
 
@@ -41,12 +46,9 @@ function counterMaker() {
    return count++;
   }
 }
-
 const counter1 = counterMaker();
-
 // counter2 code
 let count = 0;
-
 function counter2() {
   return count++;
 }
@@ -56,11 +58,11 @@ function counter2() {
 
 Write a function called `inning` that returns a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(){
+return(Math.floor(Math.random()*3)) /* gives either 0 or 1 or 2 */
 }
+console.log('Task#2:');
+console.log(inning());
 
 /* Task 3: finalScore()
 
@@ -75,15 +77,24 @@ finalScore(inning, 9) might return:
 }
 
 */ 
+console.log('Task#3:');
+let finals= finalScore(inning,9)
+console.log(finals);
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(scoreFunc,numOfInnings){
+  let homeScore=0,awayScore=0;
+  let outObj={};
+  /*loop and calc homeScore */
+  for (i=0;i<numOfInnings;i++){
+  homeScore = homeScore + scoreFunc()}
+  /*loop and calc awayScore */
+  for (j=0;j<numOfInnings;j++){
+    awayScore = awayScore + scoreFunc()}
+  outObj.Home = homeScore;
+  outObj.Away = awayScore;
+  return outObj;
 }
-
 /* Task 4: 
-
 Create a function called `scoreboard` that accepts the following parameters: 
 
 (1) Callback function `getInningScore`
@@ -101,10 +112,50 @@ and returns the score at each pont in the game, like so:
 8th inning: awayTeam - homeTeam
 9th inning: awayTeam - homeTeam
 Final Score: awayTeam - homeTeam */
+console.log('Task#4');
+console.log('invoke get inning score:')
+console.log(getInningScore(inning));
+/* Step#1 inning function will return just the random score 0 or 1or 2*/
+/* Step#2 getInning Score function will get that random score from inning function and put them as object with both scores (home & away)
+/* Step#3 Scoreboard function will use the above two function as input 
+and invoke them for each inning number and adds to the final score */
 
-
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function getInningScore(inningFunc){
+  let outObj={};
+  outObj.Home=inningFunc();
+  outObj.Away=inningFunc();
+  return outObj; /*has the out score as object*/
+}
+console.log('After calling scoreboard func:')
+console.log(scoreboard(getInningScore,inning,9));
+function scoreboard(func1,func2,noOfInnings) {
+  finalObj={
+    awayScore:0,
+    homeScore:0
+  };
+  for(i=1;i<=noOfInnings;i++){
+    let inningScore=0
+    inningScore=func1(func2);/*gets me obj -random home & away score*/
+    finalObj.homeScore=finalObj.homeScore+inningScore.Home;
+    finalObj.awayScore=finalObj.awayScore+inningScore.Away;
+    let numSuffix=getNumSuffix(i);
+    console.log(`${i}${numSuffix} inning: ${finalObj.awayScore} - ${finalObj.homeScore}`);
+  }console.log(`Final Score :${finalObj.awayScore} - ${finalObj.homeScore}`)
+  return finalObj;
 }
 
+/*Function to get the suffix for numbers 1 thru 10 */
+function getNumSuffix(index){
+  let suffixme=" "
+  if (index===1){
+    suffixme= 'st'
+  }else if (index===2){
+    suffixme= 'nd'
+  }else if(index===3){
+    suffixme = 'rd'
+  }else if(index>=4 && index<=10){
+    suffixme = 'th'
+  }
+  return suffixme;
+  }
 
