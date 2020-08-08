@@ -78,7 +78,7 @@ finalScore(inning, 9) might return:
 
 */ 
 console.log('Task#3:');
-let finals= finalScore(inning,3)
+let finals= finalScore(inning,9)
 console.log(finals);
 
 function finalScore(scoreFunc,numOfInnings){
@@ -113,9 +113,12 @@ and returns the score at each pont in the game, like so:
 9th inning: awayTeam - homeTeam
 Final Score: awayTeam - homeTeam */
 console.log('Task#4');
-
 console.log('invoke get inning score:')
 console.log(getInningScore(inning));
+/* Step#1 inning function will return just the random score 0 or 1or 2*/
+/* Step#2 getInning Score function will get that random score from inning function and put them as object with both scores (home & away)
+/* Step#3 Scoreboard function will use the above two function as input 
+and invoke them for each inning number and adds to the final score */
 
 function getInningScore(inningFunc){
   let outObj={};
@@ -123,6 +126,24 @@ function getInningScore(inningFunc){
   outObj.Away=inningFunc();
   return outObj; /*has the out score as object*/
 }
+console.log('After calling scoreboard func:')
+console.log(scoreboard(getInningScore,inning,9));
+function scoreboard(func1,func2,noOfInnings) {
+  finalObj={
+    awayScore:0,
+    homeScore:0
+  };
+  for(i=1;i<=noOfInnings;i++){
+    let inningScore=0
+    inningScore=func1(func2);/*gets me obj -random home & away score*/
+    finalObj.homeScore=finalObj.homeScore+inningScore.Home;
+    finalObj.awayScore=finalObj.awayScore+inningScore.Away;
+    let numSuffix=getNumSuffix(i);
+    console.log(`${i}${numSuffix} inning: ${finalObj.awayScore} - ${finalObj.homeScore}`);
+  }console.log(`Final Score :${finalObj.awayScore} - ${finalObj.homeScore}`)
+  return finalObj;
+}
+
 /*Function to get the suffix for numbers 1 thru 10 */
 function getNumSuffix(index){
   let suffixme=" "
@@ -137,27 +158,4 @@ function getNumSuffix(index){
   }
   return suffixme;
   }
-
-console.log('After calling scoreboard func:')
-console.log(scoreboard(getInningScore,inning,10));
-
-function scoreboard(func1,func2,noOfInnings) {
-  finalObj={
-    awayScore:0,
-    homeScore:0
-  };
-  for(i=1;i<=noOfInnings;i++){
-    let inningScore=0
-    inningScore=func1(func2);
-    finalObj.homeScore=finalObj.homeScore+inningScore.Home;
-    finalObj.awayScore=finalObj.awayScore+inningScore.Away;
-    let numSuffix=getNumSuffix(i);
-    if (i===noOfInnings){
-      console.log(`Final Score :${finalObj.awayScore} - ${finalObj.homeScore}`)}else{
-      console.log(`${i}${numSuffix} inning: ${finalObj.awayScore} - ${finalObj.homeScore}`);
-    }
-  }
-  return finalObj;
-}
-
 
